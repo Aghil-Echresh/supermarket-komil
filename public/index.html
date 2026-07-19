@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simple To‑Do</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-xl bg-white shadow p-6 rounded">
+    <h1 class="text-2xl font-bold mb-4">نمونهٔ ساده To‑Do</h1>
+
+    <div class="flex mb-4">
+      <input id="newTodo" class="flex-1 border rounded px-3 py-2" placeholder="کار جدید..." />
+      <button id="addBtn" class="mr-2 bg-blue-600 text-white px-4 py-2 rounded">اضافه</button>
+    </div>
+
+    <ul id="todoList" class="space-y-2"></ul>
+
+    <p class="mt-4 text-sm text-gray-500">این نمونه با Node/Express و SQLite ساخته شده است.</p>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
