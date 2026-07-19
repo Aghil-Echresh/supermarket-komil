@@ -1,0 +1,14 @@
+[Unit]
+Description=supermarket-komil
+After=network.target
+
+[Service]
+User=youruser
+WorkingDirectory=/home/youruser/supermarket-komil
+Environment=PORT=3000
+ExecStart=/usr/bin/node /home/youruser/supermarket-komil/server.js
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
