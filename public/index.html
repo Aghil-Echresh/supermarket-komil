@@ -1,25 +1,306 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Simple To‑Do</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-  <div class="w-full max-w-xl bg-white shadow p-6 rounded">
-    <h1 class="text-2xl font-bold mb-4">نمونهٔ ساده To‑Do</h1>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود/ثبت‌نام - سوپرمارکت کمیل</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <div class="flex mb-4">
-      <input id="newTodo" class="flex-1 border rounded px-3 py-2" placeholder="کار جدید..." />
-      <button id="addBtn" class="mr-2 bg-blue-600 text-white px-4 py-2 rounded">اضافه</button>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            dir: rtl;
+        }
+
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .form-container {
+            padding: 40px 30px;
+        }
+
+        .form-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .toggle-form {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .toggle-form a {
+            color: #667eea;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <!-- صفحه ورود -->
+            <div id="loginForm">
+                <h1>🔐 ورود</h1>
+                <div class="error" id="loginError"></div>
+                <div class="success" id="loginSuccess"></div>
+                
+                <div class="form-group">
+                    <label>ایمیل</label>
+                    <input type="email" id="loginEmail" placeholder="example@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label>کلمه عبور</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••">
+                </div>
+
+                <button class="btn" onclick="login()">ورود</button>
+
+                <div class="toggle-form">
+                    حساب کاربری ندارید؟ <a onclick="toggleForm()">ثبت‌نام کنید</a>
+                </div>
+            </div>
+
+            <!-- صفحه ثبت‌نام -->
+            <div id="registerForm" class="hidden">
+                <h1>✨ ثبت‌نام</h1>
+                <div class="error" id="registerError"></div>
+                <div class="success" id="registerSuccess"></div>
+                
+                <div class="form-group">
+                    <label>نام</label>
+                    <input type="text" id="registerName" placeholder="نام خود را وارد کنید">
+                </div>
+
+                <div class="form-group">
+                    <label>ایمیل</label>
+                    <input type="email" id="registerEmail" placeholder="example@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label>شماره تماس</label>
+                    <input type="tel" id="registerPhone" placeholder="09123456789">
+                </div>
+
+                <div class="form-group">
+                    <label>کلمه عبور</label>
+                    <input type="password" id="registerPassword" placeholder="••••••••">
+                </div>
+
+                <div class="form-group">
+                    <label>تکرار کلمه عبور</label>
+                    <input type="password" id="registerPasswordConfirm" placeholder="••••••••">
+                </div>
+
+                <button class="btn" onclick="register()">ثبت‌نام</button>
+
+                <div class="toggle-form">
+                    قبلاً ثبت‌نام کرده‌اید؟ <a onclick="toggleForm()">وارد شوید</a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <ul id="todoList" class="space-y-2"></ul>
+    <script>
+        const API_BASE = 'http://localhost:3000/api';
 
-    <p class="mt-4 text-sm text-gray-500">این نمونه با Node/Express و SQLite ساخته شده است.</p>
-  </div>
+        function toggleForm() {
+            document.getElementById('loginForm').classList.toggle('hidden');
+            document.getElementById('registerForm').classList.toggle('hidden');
+            clearMessages();
+        }
 
-  <script src="main.js"></script>
+        function clearMessages() {
+            document.querySelectorAll('.error, .success').forEach(el => {
+                el.style.display = 'none';
+                el.textContent = '';
+            });
+        }
+
+        async function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorEl = document.getElementById('loginError');
+            const successEl = document.getElementById('loginSuccess');
+
+            if (!email || !password) {
+                showError(errorEl, 'ایمیل و کلمه عبور الزامی است');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/users/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    showSuccess(successEl, 'ورود موفق! درحال انتقال...');
+                    setTimeout(() => {
+                        window.location.href = 'products.html';
+                    }, 1500);
+                } else {
+                    showError(errorEl, data.error || 'خطا در ورود');
+                }
+            } catch (error) {
+                showError(errorEl, 'خطا در برقراری ارتباط با سرور');
+            }
+        }
+
+        async function register() {
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const phone = document.getElementById('registerPhone').value;
+            const password = document.getElementById('registerPassword').value;
+            const passwordConfirm = document.getElementById('registerPasswordConfirm').value;
+            const errorEl = document.getElementById('registerError');
+            const successEl = document.getElementById('registerSuccess');
+
+            if (!name || !email || !phone || !password || !passwordConfirm) {
+                showError(errorEl, 'تمام فیلدها الزامی است');
+                return;
+            }
+
+            if (password !== passwordConfirm) {
+                showError(errorEl, 'کلمه عبور مطابقت ندارد');
+                return;
+            }
+
+            if (password.length < 6) {
+                showError(errorEl, 'کلمه عبور باید حداقل 6 کاراکتر باشد');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/users/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, phone, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showSuccess(successEl, 'ثبت‌نام موفق! لطفاً وارد شوید');
+                    setTimeout(() => {
+                        toggleForm();
+                        document.getElementById('loginEmail').value = email;
+                        clearMessages();
+                    }, 1500);
+                } else {
+                    showError(errorEl, data.error || 'خطا در ثبت‌نام');
+                }
+            } catch (error) {
+                showError(errorEl, 'خطا در برقراری ارتباط با سرور');
+            }
+        }
+
+        function showError(element, message) {
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+
+        function showSuccess(element, message) {
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+
+        // بررسی اگر قبلاً وارد شده
+        window.addEventListener('load', () => {
+            if (localStorage.getItem('token')) {
+                window.location.href = 'products.html';
+            }
+        });
+    </script>
 </body>
 </html>
