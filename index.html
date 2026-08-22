@@ -4,16 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="theme-color" content="#0b7a43">
-<meta name="description" content="سوپرمارکت کمیل - خرید آسان، سریع و مطمئن">
+<title>سوپرمارکت کمیل | خرید آسان و سریع</title>
 
-<title>سوپرمارکت کمیل</title>
+<meta name="description"
+content="سوپرمارکت کمیل؛ خرید آسان، سریع و مطمئن. تماس، سفارش واتساپ و مسیریابی آنلاین.">
+
+<meta name="theme-color" content="#111827">
 
 <style>
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 }
 
 html{
@@ -21,91 +23,1119 @@ html{
 }
 
 body{
-    font-family:Tahoma,Arial,sans-serif;
-    background:#f5f7f6;
-    color:#17231d;
+    font-family:
+    Tahoma,
+    Arial,
+    sans-serif;
+    background:
+    linear-gradient(180deg,#f8fafc 0%,#eef2f7 100%);
+    color:#111827;
     line-height:1.8;
 }
 
-/* HEADER */
-header{
-    background:linear-gradient(135deg,#087f45,#05a85a);
-    color:white;
-    padding:18px;
+a{
+    text-decoration:none;
+}
+
+.container{
+    width:min(1100px,92%);
+    margin:auto;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:650px;
     position:relative;
     overflow:hidden;
+    display:flex;
+    align-items:center;
+    color:white;
+
+    background:
+    radial-gradient(circle at 80% 20%,
+    rgba(34,197,94,.28),
+    transparent 35%),
+
+    radial-gradient(circle at 15% 80%,
+    rgba(59,130,246,.25),
+    transparent 35%),
+
+    linear-gradient(135deg,
+    #0f172a,
+    #111827 55%,
+    #052e16);
 }
 
-header:before{
+.hero::before{
     content:"";
     position:absolute;
-    width:220px;
-    height:220px;
+    width:500px;
+    height:500px;
     border-radius:50%;
-    background:rgba(255,255,255,.08);
-    top:-100px;
-    left:-60px;
+    background:rgba(255,255,255,.04);
+    top:-180px;
+    left:-150px;
 }
 
-.nav{
-    max-width:720px;
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.hero-content{
     position:relative;
-}
-
-.brand{
-    font-size:20px;
-    font-weight:bold;
-}
-
-.brand span{
-    font-size:26px;
-    margin-left:5px;
-}
-
-/* HERO */
-.hero{
-    max-width:720px;
-    margin:auto;
-    padding:55px 18px 45px;
+    z-index:2;
     text-align:center;
-    color:white;
-    background:linear-gradient(135deg,#087f45,#05a85a);
+    padding:80px 0;
 }
 
 .logo{
-    width:105px;
-    height:105px;
-    margin:0 auto 20px;
-    border-radius:30px;
+    width:95px;
+    height:95px;
+    margin:0 auto 22px;
+
     display:flex;
-    justify-content:center;
     align-items:center;
-    font-size:54px;
-    background:white;
-    box-shadow:0 15px 40px rgba(0,0,0,.18);
+    justify-content:center;
+
+    border-radius:28px;
+
+    background:
+    linear-gradient(135deg,#22c55e,#16a34a);
+
+    font-size:48px;
+
+    box-shadow:
+    0 20px 50px rgba(0,0,0,.3);
 }
 
 .hero h1{
+    font-size:clamp(34px,7vw,64px);
+    font-weight:900;
+    margin-bottom:12px;
+}
+
+.hero h1 span{
+    color:#4ade80;
+}
+
+.hero-subtitle{
+    max-width:650px;
+    margin:auto;
+    color:#d1d5db;
+    font-size:18px;
+}
+
+.badge{
+    display:inline-block;
+    margin-top:22px;
+    padding:8px 18px;
+    border-radius:50px;
+    background:rgba(34,197,94,.15);
+    border:1px solid rgba(74,222,128,.3);
+    color:#86efac;
+    font-size:14px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.hero-buttons{
+    margin-top:35px;
+
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+
+    justify-content:center;
+}
+
+.btn{
+    border:none;
+    cursor:pointer;
+
+    padding:14px 22px;
+
+    border-radius:16px;
+
+    font-size:16px;
+    font-weight:800;
+
+    transition:.25s;
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+.btn-primary{
+    background:#22c55e;
+    color:#052e16;
+
+    box-shadow:
+    0 12px 30px rgba(34,197,94,.25);
+}
+
+.btn-secondary{
+    background:white;
+    color:#111827;
+}
+
+.btn-dark{
+    background:#111827;
+    color:white;
+}
+
+.btn-whatsapp{
+    background:#25D366;
+    color:white;
+}
+
+/* =========================
+   SECTION
+========================= */
+
+section{
+    padding:80px 0;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:45px;
+}
+
+.section-title h2{
     font-size:32px;
     margin-bottom:8px;
 }
 
-.hero p{
-    font-size:15px;
-    opacity:.95;
+.section-title p{
+    color:#64748b;
 }
 
-/* OFFER */
-.offer{
-    max-width:650px;
-    margin:-5px auto 0;
-    padding:20px;
-    background:linear-gradient(135deg,#ff6b00,#ef3d20);
+/* =========================
+   FEATURES
+========================= */
+
+.features{
+    margin-top:-70px;
+    position:relative;
+    z-index:5;
+}
+
+.feature-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:18px;
+}
+
+.feature{
+    background:white;
+    padding:25px;
+    border-radius:24px;
+
+    box-shadow:
+    0 15px 40px rgba(15,23,42,.08);
+
+    text-align:center;
+
+    transition:.25s;
+}
+
+.feature:hover{
+    transform:translateY(-5px);
+}
+
+.feature-icon{
+    width:60px;
+    height:60px;
+    margin:0 auto 15px;
+
+    border-radius:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#ecfdf5;
+    font-size:28px;
+}
+
+.feature h3{
+    margin-bottom:6px;
+}
+
+.feature p{
+    color:#64748b;
+    font-size:14px;
+}
+
+/* =========================
+   CATEGORIES
+========================= */
+
+.categories{
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:18px;
+}
+
+.category{
+    position:relative;
+    overflow:hidden;
+
+    background:white;
+
+    padding:25px;
+
+    min-height:150px;
+
+    border-radius:24px;
+
+    border:1px solid #e5e7eb;
+
+    transition:.25s;
+}
+
+.category:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+}
+
+.category-icon{
+    font-size:40px;
+    margin-bottom:8px;
+}
+
+.category h3{
+    font-size:19px;
+}
+
+.category p{
+    color:#64748b;
+    font-size:13px;
+}
+
+/* =========================
+   CTA
+========================= */
+
+.cta{
+    background:
+    linear-gradient(135deg,#052e16,#166534);
+
     color:white;
+
+    border-radius:32px;
+
+    padding:55px 30px;
+
+    text-align:center;
+
+    box-shadow:
+    0 25px 60px rgba(22,101,52,.2);
+}
+
+.cta h2{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.cta p{
+    color:#dcfce7;
+    margin-bottom:25px;
+}
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:18px;
+}
+
+.contact-card{
+    background:white;
+
+    border-radius:24px;
+
+    padding:25px;
+
+    text-align:center;
+
+    box-shadow:
+    0 10px 30px rgba(15,23,42,.06);
+}
+
+.contact-card .icon{
+    font-size:35px;
+    margin-bottom:8px;
+}
+
+.contact-card h3{
+    margin-bottom:6px;
+}
+
+.contact-card a{
+    color:#16a34a;
+    font-weight:800;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    background:#0f172a;
+    color:#94a3b8;
+
+    text-align:center;
+
+    padding:35px 20px;
+}
+
+footer strong{
+    color:white;
+}
+
+/* =========================
+   ROUTE MODAL
+========================= */
+
+.route-modal{
+    position:fixed;
+
+    inset:0;
+
+    background:
+    rgba(2,6,23,.7);
+
+    backdrop-filter:blur(6px);
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    z-index:9999;
+
+    padding:20px;
+}
+
+.route-modal.active{
+    display:flex;
+}
+
+.route-box{
+    width:min(420px,100%);
+
+    background:white;
+
+    border-radius:28px;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:
+    0 30px 80px rgba(0,0,0,.35);
+
+    animation:
+    popup .25s ease;
+}
+
+@keyframes popup{
+    from{
+        opacity:0;
+        transform:scale(.9) translateY(15px);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1) translateY(0);
+    }
+}
+
+.route-box-icon{
+    font-size:45px;
+    margin-bottom:10px;
+}
+
+.route-box h3{
+    font-size:24px;
+}
+
+.route-box p{
+    color:#64748b;
+    font-size:14px;
+    margin-bottom:20px;
+}
+
+.route-option{
+    width:100%;
+
+    border:none;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:10px;
+
+    padding:15px;
+
+    margin:10px 0;
+
+    border-radius:16px;
+
+    color:white;
+
+    font-size:16px;
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.route-option:hover{
+    transform:translateY(-2px);
+}
+
+.google{
+    background:#4285F4;
+}
+
+.neshan{
+    background:#16a34a;
+}
+
+.close-btn{
+    width:100%;
+
+    padding:13px;
+
+    margin-top:8px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#f1f5f9;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+    color:#334155;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:750px){
+
+    .hero{
+        min-height:620px;
+    }
+
+    .feature-grid,
+    .categories,
+    .contact-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .hero-buttons .btn{
+        width:100%;
+    }
+
+    section{
+        padding:60px 0;
+    }
+
+    .features{
+        margin-top:-50px;
+    }
+
+    .cta{
+        padding:40px 20px;
+    }
+
+    .cta h2{
+        font-size:26px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     HERO
+========================= -->
+
+<header class="hero">
+
+<div class="container hero-content">
+
+<div class="logo">
+🛒
+</div>
+
+<h1>
+سوپرمارکت <span>کمیل</span>
+</h1>
+
+<p class="hero-subtitle">
+همه‌چیز برای خرید روزانه، سریع و آسان
+در یکجا.
+</p>
+
+<div class="badge">
+✨ با افتخار در خدمت شما هستیم
+</div>
+
+<div class="hero-buttons">
+
+<button
+class="btn btn-primary"
+onclick="openRouteModal()">
+📍 مسیریابی تا فروشگاه
+</button>
+
+<a
+class="btn btn-whatsapp"
+href="https://wa.me/989030635648"
+target="_blank">
+💬 سفارش واتساپی
+</a>
+
+<a
+class="btn btn-secondary"
+href="tel:09030635648">
+📞 تماس با فروشگاه
+</a>
+
+</div>
+
+</div>
+
+</header>
+
+
+<!-- =========================
+     FEATURES
+========================= -->
+
+<section class="features">
+
+<div class="container">
+
+<div class="feature-grid">
+
+<div class="feature">
+
+<div class="feature-icon">
+⚡
+</div>
+
+<h3>
+سریع و آسان
+</h3>
+
+<p>
+خرید روزانه بدون دردسر
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="feature-icon">
+🛍️
+</div>
+
+<h3>
+تنوع محصولات
+</h3>
+
+<p>
+محصولات مورد نیاز شما
+در یکجا
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="feature-icon">
+❤️
+</div>
+
+<h3>
+در خدمت شما
+</h3>
+
+<p>
+رضایت شما اولویت ماست
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     CATEGORIES
+========================= -->
+
+<section>
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>
+🛒 دسته‌بندی محصولات
+</h2>
+
+<p>
+برای خرید روزانه، انتخاب‌های متنوعی داریم
+</p>
+
+</div>
+
+
+<div class="categories">
+
+<div class="category">
+
+<div class="category-icon">
+🥛
+</div>
+
+<h3>
+لبنیات
+</h3>
+
+<p>
+شیر، ماست، پنیر و محصولات لبنی
+</p>
+
+</div>
+
+
+<div class="category">
+
+<div class="category-icon">
+🥤
+</div>
+
+<h3>
+نوشیدنی
+</h3>
+
+<p>
+نوشابه، آبمیوه، آب معدنی و ...
+</p>
+
+</div>
+
+
+<div class="category">
+
+<div class="category-icon">
+🍫
+</div>
+
+<h3>
+تنقلات
+</h3>
+
+<p>
+شکلات، چیپس، پفک و خوراکی‌ها
+</p>
+
+</div>
+
+
+<div class="category">
+
+<div class="category-icon">
+🍚
+</div>
+
+<h3>
+مواد غذایی
+</h3>
+
+<p>
+اقلام ضروری و مواد غذایی روزانه
+</p>
+
+</div>
+
+
+<div class="category">
+
+<div class="category-icon">
+🧼
+</div>
+
+<h3>
+شوینده و بهداشتی
+</h3>
+
+<p>
+محصولات نظافت و بهداشت
+</p>
+
+</div>
+
+
+<div class="category">
+
+<div class="category-icon">
+☕
+</div>
+
+<h3>
+صبحانه
+</h3>
+
+<p>
+چای، قهوه، مربا، عسل و ...
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     CTA
+========================= -->
+
+<section>
+
+<div class="container">
+
+<div class="cta">
+
+<h2>
+🛒 آماده خرید هستید؟
+</h2>
+
+<p>
+همین حالا با سوپرمارکت کمیل تماس بگیرید
+یا مسیر فروشگاه را پیدا کنید.
+</p>
+
+<div class="hero-buttons">
+
+<button
+class="btn btn-secondary"
+onclick="openRouteModal()">
+📍 مسیریابی
+</button>
+
+<a
+class="btn btn-whatsapp"
+href="https://wa.me/989030635648"
+target="_blank">
+💬 واتساپ
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section>
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>
+📞 ارتباط با ما
+</h2>
+
+<p>
+راه‌های ارتباطی سوپرمارکت کمیل
+</p>
+
+</div>
+
+
+<div class="contact-grid">
+
+<div class="contact-card">
+
+<div class="icon">
+📞
+</div>
+
+<h3>
+تماس تلفنی
+</h3>
+
+<a href="tel:09030635648">
+09030635648
+</a>
+
+</div>
+
+
+<div class="contact-card">
+
+<div class="icon">
+💬
+</div>
+
+<h3>
+واتساپ
+</h3>
+
+<a
+href="https://wa.me/989030635648"
+target="_blank">
+
+ارسال پیام
+
+</a>
+
+</div>
+
+
+<div class="contact-card">
+
+<div class="icon">
+📍
+</div>
+
+<h3>
+آدرس فروشگاه
+</h3>
+
+<a
+href="https://maps.app.goo.gl/mmfXpS3GZvnSdWry7"
+target="_blank">
+
+مشاهده روی نقشه
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+<p>
+<strong>سوپرمارکت کمیل</strong>
+</p>
+
+<p>
+با افتخار در خدمت شما هستیم ❤️
+</p>
+
+<p>
+© 2026 تمامی حقوق محفوظ است.
+</p>
+
+</footer>
+
+
+<!-- =========================
+     ROUTE MODAL
+========================= -->
+
+<div
+id="routeModal"
+class="route-modal"
+onclick="closeRouteOutside(event)">
+
+<div class="route-box">
+
+<div class="route-box-icon">
+📍
+</div>
+
+<h3>
+انتخاب مسیریابی
+</h3>
+
+<p>
+برنامه مورد نظر خود را برای مسیریابی
+تا سوپرمارکت کمیل انتخاب کنید.
+</p>
+
+
+<!-- GOOGLE MAPS -->
+
+<a
+class="route-option google"
+href="https://www.google.com/maps/dir/?api=1&destination=7MXF%2BF69%2C%20Ahvaz%2C%20Khuzestan&travelmode=driving&dir_action=navigate"
+target="_blank">
+
+🗺️
+مسیریابی با Google Maps
+
+</a>
+
+
+<!-- NESHAN -->
+
+<a
+class="route-option neshan"
+href="https://maps.app.goo.gl/mmfXpS3GZvnSdWry7"
+target="_blank">
+
+🚗
+مسیریابی با نشان
+
+</a>
+
+
+<button
+class="close-btn"
+onclick="closeRouteModal()">
+
+بستن
+
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   ROUTE MODAL
+========================= */
+
+function openRouteModal(){
+
+    document
+    .getElementById("routeModal")
+    .classList
+    .add("active");
+
+}
+
+
+function closeRouteModal(){
+
+    document
+    .getElementById("routeModal")
+    .classList
+    .remove("active");
+
+}
+
+
+function closeRouteOutside(event){
+
+    if(
+        event.target.id === "routeModal"
+    ){
+
+        closeRouteModal();
+
+    }
+
+}
+
+
+/* =========================
+   ESC KEY
+========================= */
+
+document.addEventListener(
+"keydown",
+function(event){
+
+    if(event.key === "Escape"){
+
+        closeRouteModal();
+
+    }
+
+});
+
+
+/* =========================
+   PREVENT OLD HASH JUMP
+========================= */
+
+document.querySelectorAll(
+'a[href="#"]'
+).forEach(function(link){
+
+    link.addEventListener(
+    "click",
+    function(event){
+
+        event.preventDefault();
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>    color:white;
     text-align:center;
     border-radius:22px;
     box-shadow:0 12px 30px rgba(0,0,0,.15);
