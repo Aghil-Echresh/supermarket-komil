@@ -1,0 +1,15 @@
+{
+  "name": "@aghil/supermarket-komil-mcp",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "validate": "noodle validate",
+    "dev": "noodle dev",
+    "test": "noodle test",
+    "check": "noodle check"
+  },
+  "dependencies": {
+    "@noodleseed/one": "^0.190.0"
+  }
+}
