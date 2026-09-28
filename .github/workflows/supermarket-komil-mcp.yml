@@ -1,0 +1,28 @@
+name: Supermarket Komil MCP
+
+on:
+  push:
+    paths:
+      - "mcp/**"
+      - ".github/workflows/supermarket-komil-mcp.yml"
+  pull_request:
+    paths:
+      - "mcp/**"
+      - ".github/workflows/supermarket-komil-mcp.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mcp
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: mcp/package.json
+      - run: npm install
+      - run: npm run validate
+      - run: npm run check
