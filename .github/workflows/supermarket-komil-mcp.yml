@@ -1,4 +1,5 @@
 name: Supermarket Komil MCP
+# Validation workflow
 
 on:
   push:
