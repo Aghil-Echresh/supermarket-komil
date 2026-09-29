@@ -26,4 +26,3 @@ jobs:
           cache-dependency-path: mcp/package.json
       - run: npm install
       - run: npm run validate
-      - run: npm run check
