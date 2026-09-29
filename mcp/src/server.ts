@@ -76,7 +76,7 @@ export default server(
       }),
       annotations: annotations.readOnly(),
       fulfil: ({ input }) => {
-        const q = input.query.trim().toLocaleLowerCase("fa-IR");
+        const q = `${input.query}`.trim().toLocaleLowerCase("fa-IR");
         const matches = products
           .filter(p =>
             p.name.toLocaleLowerCase("fa-IR").includes(q) ||
