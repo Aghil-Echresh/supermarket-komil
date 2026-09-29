@@ -17,19 +17,31 @@ const store = {
 };
 
 const guide = {
-  summary:
+  description:
     "دستیار MCP سوپرمارکت کمیل برای معرفی فروشگاه، جست‌وجوی کالا و آماده‌سازی سفارش.",
+  useWhen: [
+    "کاربر درباره اطلاعات سوپرمارکت کمیل سؤال می‌کند.",
+    "کاربر می‌خواهد کالاها، قیمت یا موجودی را جست‌وجو کند."
+  ],
   workflows: [
     {
       id: "find_products",
-      prompt: "کالاهای موردنظر مشتری را جست‌وجو کن و قیمت و موجودی را نشان بده.",
-      tool: "search_products"
+      title: "جست‌وجوی کالا",
+      steps: [
+        { capability: { kind: "tool", name: "search_products" } }
+      ]
     },
     {
       id: "store_info",
-      prompt: "اطلاعات تماس و آدرس فروشگاه را ارائه کن.",
-      tool: "get_store_info"
+      title: "اطلاعات فروشگاه",
+      steps: [
+        { capability: { kind: "tool", name: "get_store_info" } }
+      ]
     }
+  ],
+  boundaries: [
+    "فقط اطلاعات و کالاهای تعریف‌شده در این MCP را گزارش کن.",
+    "قیمت یا موجودی تعریف‌نشده را حدس نزن."
   ]
 };
 
