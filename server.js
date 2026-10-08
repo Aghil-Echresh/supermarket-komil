@@ -305,7 +305,25 @@ app.get('/api/bale/webhook-info', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+async function configureBaleWebhookOnStartup() {
+  const publicUrl = process.env.RENDER_EXTERNAL_URL || process.env.BALE_PUBLIC_URL;
+
+  if (!BALE_TOKEN || !BALE_WEBHOOK_SECRET || !publicUrl) {
+    return;
+  }
+
+  const webhookUrl = `${String(publicUrl).replace(/\\/$/, '')}/bale/webhook/${BALE_WEBHOOK_SECRET}`;
+
+  try {
+    await baleApi('setWebhook', { url: webhookUrl });
+    console.log(`Bale webhook configured: ${webhookUrl}`);
+  } catch (error) {
+    console.error('Bale webhook configuration failed:', error.message);
+  }
+}
+
+app.listen(PORT, async () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Bale bot configured: ${Boolean(BALE_TOKEN)}`);
+  await configureBaleWebhookOnStartup();
 });
