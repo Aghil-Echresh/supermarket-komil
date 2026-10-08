@@ -3,7 +3,7 @@ const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 
 const app = express();
-const db = new sqlite3.Database(path.join(__dirname, 'db.sqlite'));
+const db = new sqlite3.Database(process.env.DB_PATH || path.join(__dirname, 'db.sqlite'));
 
 const BALE_API = 'https://tapi.bale.ai/bot';
 const BALE_TOKEN = process.env.BALE_BOT_TOKEN || '';
