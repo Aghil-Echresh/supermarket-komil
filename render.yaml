@@ -8,7 +8,7 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
-      - key: BALE_BOT_TOKEN
+      - key: 1234123214:0fF0GL6-AasOFIccjHlqvWjtW2Essf4iHww
         sync: false
       - key: BALE_WEBHOOK_SECRET
         sync: false
