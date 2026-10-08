@@ -1,30 +1,48 @@
-# supermarket-komil
+# سوپرمارکت کمیل
 
-نمونهٔ سادهٔ اپ To‑Do با Node/Express و SQLite — شروع سریع برای پروژهٔ "supermarket-komil".
+وب‌سایت و Backend سوپرمارکت کمیل به همراه ربات بله.
 
-## اجرا محلی
+## ربات بله
 
-پیش‌نیاز: Node.js 16+ نصب باشد.
+Backend از API رسمی بله با Base URL زیر استفاده می‌کند:
 
-1. نصب وابستگی‌ها:
+https://tapi.bale.ai/bot<TOKEN>/
 
-```bash
-npm install
-```
+### متغیرهای محیطی
 
-2. اجرای سرور:
+- `BALE_BOT_TOKEN`: توکن بازوی بله
+- `BALE_WEBHOOK_SECRET`: رشته تصادفی برای مسیر Webhook
+- `BALE_ADMIN_SECRET`: رشته تصادفی برای endpointهای مدیریتی
 
-```bash
-npm start
-```
+**هیچ‌کدام از این مقادیر نباید داخل Git commit شوند.**
 
-3. باز کردن در مرورگر:
+### Webhook
 
-http://localhost:3000
+بعد از Deploy شدن سرویس، URL پایه سرویس را داشته باش.
 
-## فایل‌ها
-- server.js — سرور Express و API
-- public/ — فایل‌های فرانت‌اند (index.html, main.js)
-- package.json
+سپس یک درخواست POST به:
 
-توجه: فایل db.sqlite در .gitignore قرار دارد و در رپو پوش نمی‌شود. اگر خواستید دیتابیس اولیه اضافه شود بگویید.
+`/api/bale/set-webhook`
+
+با Header زیر:
+
+`x-admin-secret: <BALE_ADMIN_SECRET>`
+
+و Body:
+
+`{"base_url":"https://YOUR-SERVICE-DOMAIN" }`
+
+ارسال کن.
+
+سرویس خودش Webhook نهایی را به شکل زیر می‌سازد:
+
+`https://YOUR-SERVICE-DOMAIN/bale/webhook/<BALE_WEBHOOK_SECRET>`
+
+### تست
+
+`GET /health`
+
+باید پاسخ JSON با `ok: true` برگرداند.
+
+مستندات رسمی بله:
+https://docs.bale.ai/
