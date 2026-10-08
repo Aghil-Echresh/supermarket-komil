@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: supermarket-komil-bale-bot
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: BALE_BOT_TOKEN
+        sync: false
+      - key: BALE_WEBHOOK_SECRET
+        sync: false
+      - key: BALE_ADMIN_SECRET
+        sync: false
+    disk:
+      name: supermarket-komil-data
+      mountPath: /opt/render/project/src
+      sizeGB: 1
