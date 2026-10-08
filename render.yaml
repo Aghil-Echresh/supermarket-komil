@@ -8,6 +8,8 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      - key: DB_PATH
+        value: /var/data/db.sqlite
       - key: BALE_BOT_TOKEN
         sync: false
       - key: BALE_WEBHOOK_SECRET
