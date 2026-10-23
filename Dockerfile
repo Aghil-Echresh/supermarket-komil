@@ -1,14 +1,11 @@
 # Use a slim Node image
-FROM node:18-alpine
+FROM node:20-alpine
 
-# Create app directory
 WORKDIR /app
 
-# Install dependencies
 COPY package*.json ./
-RUN npm ci --production
+RUN npm install --omit=dev
 
-# Copy app source
 COPY . .
 
 ENV PORT=3000
