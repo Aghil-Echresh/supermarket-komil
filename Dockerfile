@@ -1,12 +1,12 @@
 # Use a slim Node image
-FROM node:18-alpine
+FROM node:20-bookworm-slim
 
 # Create app directory
 WORKDIR /app
 
 # Install dependencies
 COPY package*.json ./
-RUN npm ci --production
+RUN npm ci --omit=dev
 
 # Copy app source
 COPY . .

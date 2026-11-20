@@ -13,12 +13,14 @@ https://tapi.bale.ai/bot<TOKEN>/
 - `BALE_BOT_TOKEN`: توکن بازوی بله
 - `BALE_WEBHOOK_SECRET`: رشته تصادفی برای مسیر Webhook
 - `BALE_ADMIN_SECRET`: رشته تصادفی برای endpointهای مدیریتی
+- `BALE_PUBLIC_URL`: نشانی عمومی HTTPS در صورت نبود `RENDER_EXTERNAL_URL`
+- `TODO_ADMIN_TOKEN`: توکن Bearer برای API داخلی کارها
 
 **هیچ‌کدام از این مقادیر نباید داخل Git commit شوند.**
 
 ### Webhook
 
-بعد از Deploy شدن سرویس، URL پایه سرویس را داشته باش.
+نشانی پایهٔ سرویس را در تنظیمات میزبان به‌عنوان `BALE_PUBLIC_URL` قرار بده؛ در Render نشانی داخلیِ آماده نیز پشتیبانی می‌شود.
 
 سپس یک درخواست POST به:
 
@@ -28,11 +30,7 @@ https://tapi.bale.ai/bot<TOKEN>/
 
 `x-admin-secret: <BALE_ADMIN_SECRET>`
 
-و Body:
-
-`{"base_url":"https://YOUR-SERVICE-DOMAIN" }`
-
-ارسال کن.
+درخواست به Body نیاز ندارد؛ برای امنیت، نشانی از تنظیمات خود سرویس خوانده می‌شود، نه از درخواست کاربر.
 
 سرویس خودش Webhook نهایی را به شکل زیر می‌سازد:
 
@@ -42,7 +40,7 @@ https://tapi.bale.ai/bot<TOKEN>/
 
 `GET /health`
 
-باید پاسخ JSON با `ok: true` برگرداند.
+باید پاسخ JSON با `ok: true` برگرداند. برای نصب و اجرای تست محلی با Node.js 20.17 یا جدیدتر: `npm ci` و سپس `npm test`.
 
 مستندات رسمی بله:
 https://docs.bale.ai/

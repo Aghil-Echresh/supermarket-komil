@@ -33,3 +33,10 @@ Notes & recommendations
 - For production use consider switching from SQLite to PostgreSQL for reliability with concurrent access.
 - Ensure the service user has write permissions to the project directory so db.sqlite can be created.
 - Add backups for db.sqlite or migrate to a managed DB if needed.
+# نکات راه‌اندازی نسخهٔ امن
+
+- ابتدا هر توکن بله‌ای را که قبلاً در مخزن قرار گرفته، در بله لغو کنید. توکن جدید `BALE_BOT_TOKEN` و کلیدهای وب‌هوک را فقط در تنظیمات محیطی میزبان قرار دهید. هیچ‌کدام نباید در Git ثبت شوند.
+- برای فعال‌کردن API کارهای داخلی، `TODO_ADMIN_TOKEN` را به‌صورت یک مقدار تصادفی بلند تنظیم کنید. درخواست‌ها به `GET/POST /api/todos` و `PUT/DELETE /api/todos/:id` با هدر `Authorization: Bearer …` مجازند؛ بدون تنظیم توکن این مسیرها غیرفعال می‌مانند.
+- `DB_PATH` در صورت نیاز مسیر SQLite را تعیین می‌کند. اگر قبلاً داده دارید، از فایل پشتیبان بگیرید و مسیر قبلی را حفظ کنید؛ آن را با یک فایل خالی جایگزین نکنید.
+- الگوی Render با دیسک `/var/data` به پلن پولی نیاز دارد. قبل از همگام‌سازی Blueprint یا تغییر پلن، هزینه و انتقال دادهٔ موجود را تأیید کنید. دیسک دائمی در پلن رایگان در دسترس نیست؛ [راهنمای دیسک‌های Render](https://render.com/docs/disks).
+- صفحهٔ عمومی فروشگاه از GitHub Pages مستقل از API ارائه می‌شود. فرم آزمایشی ورود از سرور بک‌اند عرضه نمی‌شود.

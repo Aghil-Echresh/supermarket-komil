@@ -1,9 +1,10 @@
 const express = require('express');
 const path = require('path');
+const { timingSafeEqual } = require('node:crypto');
 const sqlite3 = require('sqlite3').verbose();
 
 const app = express();
-const db = new sqlite3.Database(path.join(__dirname, 'db.sqlite'));
+const db = new sqlite3.Database(process.env.DB_PATH || path.join(__dirname, 'db.sqlite'));
 
 const BALE_API = 'https://tapi.bale.ai/bot';
 const BALE_TOKEN = process.env.BALE_BOT_TOKEN || '';
@@ -30,7 +31,21 @@ db.serialize(() => {
 });
 
 app.use(express.json({ limit: '1mb' }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.get('/', (_req, res) => res.redirect('https://aghil-echresh.github.io/supermarket-komil/'));
+app.use('/api/todos', (req, res, next) => {
+  const token = process.env.TODO_ADMIN_TOKEN;
+  res.set('Cache-Control', 'no-store');
+  if (!token) return res.status(503).json({ error: 'Todo API not configured' });
+  const supplied = req.get('authorization')?.match(/^Bearer (.+)$/i)?.[1] || '';
+  const expected = Buffer.from(token);
+  const actual = Buffer.from(supplied);
+  if (expected.length !== actual.length || !timingSafeEqual(expected, actual)) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  next();
+});
+
+const validTitle = (text) => typeof text === 'string' && text.trim().length > 0 && text.trim().length <= 200;
 
 // Health check
 app.get('/health', (req, res) => {
@@ -52,10 +67,10 @@ app.get('/api/todos', (req, res) => {
 });
 
 app.post('/api/todos', (req, res) => {
-  const { title } = req.body;
-  if (!title) return res.status(400).json({ error: 'title required' });
+  const { title } = req.body || {};
+  if (!validTitle(title)) return res.status(400).json({ error: 'Invalid title' });
 
-  db.run('INSERT INTO todos (title) VALUES (?)', [title], function (err) {
+  db.run('INSERT INTO todos (title) VALUES (?)', [title.trim()], function (err) {
     if (err) return res.status(500).json({ error: err.message });
 
     db.get('SELECT * FROM todos WHERE id = ?', [this.lastID], (err, row) => {
@@ -67,11 +82,16 @@ app.post('/api/todos', (req, res) => {
 
 app.put('/api/todos/:id', (req, res) => {
   const id = req.params.id;
-  const { title, done } = req.body;
+  const { title, done } = req.body || {};
+  if (!/^[1-9]\d*$/.test(id) || (title === undefined && done === undefined) ||
+      (title !== undefined && !validTitle(title)) ||
+      (done !== undefined && done !== 0 && done !== 1)) {
+    return res.status(400).json({ error: 'Invalid task update' });
+  }
 
   db.run(
     'UPDATE todos SET title = COALESCE(?, title), done = COALESCE(?, done) WHERE id = ?',
-    [title, done, id],
+    [title?.trim() ?? null, done ?? null, id],
     function (err) {
       if (err) return res.status(500).json({ error: err.message });
       if (this.changes === 0) return res.status(404).json({ error: 'not found' });
@@ -104,7 +124,8 @@ async function baleApi(method, payload = {}) {
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(10000)
     }
   );
 
@@ -269,22 +290,22 @@ app.post('/api/bale/set-webhook', async (req, res) => {
     return res.status(401).json({ ok: false, error: 'unauthorized' });
   }
 
-  const baseUrl = String(req.body?.base_url || '').replace(/\/$/, '');
+  const baseUrl = configuredBaleOrigin();
 
   if (!baseUrl || !BALE_WEBHOOK_SECRET) {
-    return res.status(400).json({
+    return res.status(503).json({
       ok: false,
-      error: 'base_url and BALE_WEBHOOK_SECRET are required'
+      error: 'HTTPS public URL and webhook secret are required'
     });
   }
 
-  const webhookUrl = `${baseUrl}/bale/webhook/${BALE_WEBHOOK_SECRET}`;
+  const webhookUrl = `${baseUrl}/bale/webhook/${encodeURIComponent(BALE_WEBHOOK_SECRET)}`;
 
   try {
-    const result = await baleApi('setWebhook', { url: webhookUrl });
-    res.json({ ...result, webhook_url: webhookUrl });
+    await baleApi('setWebhook', { url: webhookUrl });
+    res.json({ ok: true });
   } catch (error) {
-    res.status(502).json({ ok: false, error: error.message });
+    res.status(502).json({ ok: false, error: 'Bale webhook configuration failed' });
   }
 });
 
@@ -297,33 +318,45 @@ app.get('/api/bale/webhook-info', async (req, res) => {
 
   try {
     const result = await baleApi('getWebhookInfo');
-    res.json(result);
+    res.json({ ok: true, configured: Boolean(result.result?.url) });
   } catch (error) {
-    res.status(502).json({ ok: false, error: error.message });
+    res.status(502).json({ ok: false, error: 'Bale webhook status unavailable' });
   }
 });
 
 const PORT = process.env.PORT || 3000;
 
+function configuredBaleOrigin() {
+  try {
+    const url = new URL(process.env.BALE_PUBLIC_URL || process.env.RENDER_EXTERNAL_URL || '');
+    return url.protocol === 'https:' && !url.username && !url.password ? url.origin : null;
+  } catch {
+    return null;
+  }
+}
+
 async function configureBaleWebhookOnStartup() {
-  const publicUrl = process.env.RENDER_EXTERNAL_URL || process.env.BALE_PUBLIC_URL;
+  const publicUrl = configuredBaleOrigin();
 
   if (!BALE_TOKEN || !BALE_WEBHOOK_SECRET || !publicUrl) {
     return;
   }
 
-  const webhookUrl = `${String(publicUrl).replace(/\\/$/, '')}/bale/webhook/${BALE_WEBHOOK_SECRET}`;
+  const webhookUrl = `${publicUrl}/bale/webhook/${encodeURIComponent(BALE_WEBHOOK_SECRET)}`;
 
   try {
     await baleApi('setWebhook', { url: webhookUrl });
-    console.log(`Bale webhook configured: ${webhookUrl}`);
+    console.log('Bale webhook configured');
   } catch (error) {
-    console.error('Bale webhook configuration failed:', error.message);
+    console.error('Bale webhook configuration failed');
   }
 }
 
-app.listen(PORT, async () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Bale bot configured: ${Boolean(BALE_TOKEN)}`);
-  await configureBaleWebhookOnStartup();
-});
+if (require.main === module) {
+  app.listen(PORT, async () => {
+    console.log(`Server running on port ${PORT}`);
+    await configureBaleWebhookOnStartup();
+  });
+}
+
+module.exports = { app, db };
