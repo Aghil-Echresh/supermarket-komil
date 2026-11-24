@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aghil-echresh.github.io/supermarket-komil/sitemap.xml
